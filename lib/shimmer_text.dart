@@ -42,10 +42,13 @@ class _ShimmerTextState extends State<ShimmerText> {
     final Widget widgetUsed = _getWidget();
     if (widget.isShimmerLoading) {
       _getSizeBasedOnWidget();
-      return Container(
-        color: Colors.white,
-        width: widthUsed,
-        height: heightUsed,
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2.0),
+        child: Container(
+          color: Colors.white,
+          width: widthUsed,
+          height: heightUsed,
+        ),
       );
     }
 
