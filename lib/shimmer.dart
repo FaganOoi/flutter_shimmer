@@ -58,16 +58,20 @@ enum ShimmerDirection { ltr, rtl, ttb, btt }
 @immutable
 class Shimmer extends StatefulWidget {
   final Widget child;
+  final Widget? loadingChild;
   final Duration period;
   final ShimmerDirection direction;
   final Gradient gradient;
   final int loop;
   final bool enabled;
+  final bool isLoading;
 
   const Shimmer({
     Key? key,
     required this.child,
     required this.gradient,
+    this.isLoading = true,
+    this.loadingChild,
     this.direction = ShimmerDirection.ltr,
     this.period = const Duration(milliseconds: 1500),
     this.loop = 0,
@@ -84,6 +88,8 @@ class Shimmer extends StatefulWidget {
     required this.child,
     required Color baseColor,
     required Color highlightColor,
+    this.isLoading = true,
+    this.loadingChild,
     this.period = const Duration(milliseconds: 1500),
     this.direction = ShimmerDirection.ltr,
     this.loop = 0,
@@ -160,9 +166,13 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.isLoading) {
+      return widget.child;
+    }
+
     return AnimatedBuilder(
       animation: _controller,
-      child: widget.child,
+      child: widget.loadingChild ?? widget.child,
       builder: (BuildContext context, Widget? child) => _Shimmer(
         child: child,
         direction: widget.direction,
