@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ShimmerText extends StatefulWidget {
   final bool isShimmerLoading;
-  final String? text;
+  final Text? text;
   final TextSpan? textSpan;
 
   /// isSpan true = TextSpan; Otherwise  =  Text
@@ -41,7 +41,7 @@ class _ShimmerTextState extends State<ShimmerText> {
   Widget build(BuildContext context) {
     final Widget widgetUsed = _getWidget();
     if (widget.isShimmerLoading) {
-      _getSizeBasedOnWidget(widgetUsed);
+      _getSizeBasedOnWidget();
       return Container(
         color: Colors.white,
         width: widthUsed,
@@ -57,16 +57,15 @@ class _ShimmerTextState extends State<ShimmerText> {
         ? RichText(
             text: widget.textSpan!,
           )
-        : Text(widget.text!);
+        : widget.text!;
   }
 
-  void _getSizeBasedOnWidget(Widget widgetUsed) {
+  void _getSizeBasedOnWidget() {
     if (widget.shimmerLoadingWidth == 0 || widget.shimmerLoadingWidth == 0) {
       if (!widget.isSpan) {
-        final Text textWidget = widgetUsed as Text;
         final Size textSize = _textSize(
-          textWidget.data ?? '',
-          textWidget.style ??
+          widget.text!.data ?? '',
+          widget.text!.style ??
               const TextStyle(
                 fontSize: 12,
               ),
